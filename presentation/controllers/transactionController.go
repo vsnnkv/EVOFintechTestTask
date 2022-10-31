@@ -24,3 +24,16 @@ func (controller *TransactionController) SaveTransactions(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"status": "success"})
 	}
 }
+
+func (controller *TransactionController) Get(c *gin.Context) {
+	receivedDataFromFilters := services.NewReceivedFiltersFilters(c.QueryArray("transaction_id"),
+		c.QueryArray("terminal_id"), c.Query("status"), c.Query("payment_type"),
+		c.Query("from"), c.Query("to"), c.Query("payment_narrative"))
+
+	transactions, err := controller.service.GetFilteredData(receivedDataFromFilters)
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	}
+	c.JSON(http.StatusOK, transactions)
+}

@@ -19,15 +19,15 @@ func (r *Router) CreateRouter() {
 	router := gin.Default()
 
 	router.GET("/saveTransactions", r.transactionController.SaveTransactions)
-	router.GET("/getSMTH")
+	router.GET("/getSMTH", r.transactionController.Get)
 
 	router.Run(":8080")
 }
 
 func InitRoutes() {
-	db := repository.DB{}
+	repository := repository.DB{}
 
-	transactionService := services.NewTransactionService(db)
+	transactionService := services.NewTransactionService(repository)
 	transactionController := controllers.NewTransactionController(transactionService)
 
 	router := New(transactionController)
