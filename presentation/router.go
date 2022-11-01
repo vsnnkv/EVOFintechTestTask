@@ -19,7 +19,7 @@ func (r *Router) CreateRouter() {
 	router := gin.Default()
 
 	router.GET("/saveTransactions", r.transactionController.SaveTransactions)
-	router.GET("/getSMTH", r.transactionController.Get)
+	router.GET("/transactions", r.transactionController.Get)
 
 	router.Run(":8080")
 }

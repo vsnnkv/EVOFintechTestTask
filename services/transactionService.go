@@ -1,7 +1,6 @@
 package services
 
 import (
-	"EVOFintechTestTask/config"
 	"EVOFintechTestTask/models"
 	"EVOFintechTestTask/repository"
 	"errors"
@@ -13,6 +12,8 @@ import (
 	"strings"
 	"time"
 )
+
+const urlForDownload = "https://drive.google.com/u/0/uc?id=1IwZ3uUCHGpSL2OoQu4mtbw7Ew3ZamcGB&export=download"
 
 type TransactionServiceInterface interface {
 	SaveData() error
@@ -158,8 +159,7 @@ func lookForDate(transactions *[]models.Transaction, timeFrom int64, timeTo int6
 }
 
 func downloadData() (error, string) {
-	cfg := config.Get()
-	url := cfg.DownloadUrl + cfg.FileId + cfg.DownloadUrlEnding
+	url := urlForDownload
 	fileName := "file.csv"
 
 	output, err := os.Create(fileName)

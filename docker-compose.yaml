@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  postgres:
+    container_name: postgres-container
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: "transactions_database"
+    ports:
+      - "5432:5432"
+  pgadmin:
+    container_name: pgadmin-container
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "vsnnkv@gmail.com"
+      PGADMIN_DEFAULT_PASSWORD: "admin"
+    ports:
+    - "5050:5050"
+  transactions-app-image:
+    build: ./
+    restart: always
+    ports:
+      - "8080:8080"
